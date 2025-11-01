@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Bookings - Admin</title>
+</head>
+<body>
+    <h1>All Bookings</h1>
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Booking ID</th>
+                <th>User</th>
+                <th>Show</th>
+                <th>Venue</th>
+                <th>Booking Date</th>
+                <th>Seat Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.id }}</td>
+                <td>{{ booking.user.username }}</td>
+                <td>{{ booking.show.name }}</td>
+                <td>{{ booking.show.venue.name }}</td>
+                <td>{{ booking.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                <td>{{ booking.seat_number }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="6">No bookings found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+    

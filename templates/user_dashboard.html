@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}">
+    <style>
+        body {
+            background-color: #1e1e1e; /* Dark background */
+            color: #000;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .dashboard-box {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .dashboard-box h1 {
+            color: #333;
+        }
+
+        .dashboard-box p {
+            margin-top: 10px;
+            margin-bottom: 25px;
+            color: #444;
+            font-size: 18px;
+        }
+
+        .dashboard-box button {
+            padding: 12px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .dashboard-box button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-box">
+    <h1>Welcome, User!</h1>
+    <p>Browse and book shows here.</p>
+
+<a href="{{ url_for('user_venues') }}">
+    <button>View Venues & Shows</button>
+</a>
+
+    </a>
+</div>
+
+</body>
+</html>

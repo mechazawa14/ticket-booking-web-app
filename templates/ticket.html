@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🎟️ Your Movie Ticket</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f8;
+      display: flex;
+      justify-content: center;
+      padding: 40px;
+    }
+    .ticket {
+      width: 500px;
+      background: #ffffff;
+      border: 3px dashed #444;
+      border-radius: 12px;
+      padding: 20px 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      background-image: url('/static/ticket_bg.jpg'); /* Optional */
+      background-size: cover;
+      background-blend-mode: lighten;
+    }
+    .ticket h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #222;
+    }
+    .ticket p {
+      margin: 5px 0;
+      font-size: 16px;
+    }
+    .barcode {
+      display: block;
+      margin: 20px auto;
+      max-width: 100%;
+      height: auto;
+    }
+    .tagline {
+      text-align: center;
+      font-style: italic;
+      margin-top: 10px;
+      color: #555;
+    }
+    .ticket-id {
+      text-align: right;
+      font-size: 12px;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <div class="ticket">
+    <h2>🎬 Ticket Confirmation</h2>
+    <p><strong>Name:</strong> {{ user.username }}</p>
+    <p><strong>Phone:</strong> {{ user.phone }}</p>
+    <p><strong>Show:</strong> {{ show.name }}</p>
+    <p><strong>Date:</strong> {{ show.date.strftime('%b %d, %Y - %I:%M %p') }}</p>
+    <p><strong>Seat Number:</strong> {{ seat_number }}</p>
+    {% if snacks %}
+      <p><strong>Snacks:</strong> {{ snacks }}</p>
+    {% else %}
+      <p><strong>Snacks:</strong> None</p>
+    {% endif %}
+    <img class="barcode" src="{{ url_for('static', filename=barcode.split('static/')[1]) }}" alt="Barcode">
+    <div class="tagline">"{{ tagline }}"</div>
+    <div class="ticket-id">Ticket ID: MTBS2025-{{ show.id }}-{{ booking_id }}</div>
+  </div>
+</body>
+</html>

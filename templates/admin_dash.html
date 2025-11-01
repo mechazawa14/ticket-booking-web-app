@@ -1,0 +1,274 @@
+{% extends 'admin_base.html' %}
+
+{% block body %}
+        
+
+    <style>
+         .circle-button {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+
+      /* Initially hide the form */
+      /* #venueForm {
+        display: none;
+        margin-top: 20px;
+      } */
+
+      /* Display the form when checkbox is checked */
+      /* #toggleForm:checked + #venueForm {
+        display: block;
+      } */
+
+
+    </style>
+    <style>
+      /* Adjusting the close button position */
+      .modal-header .btn-close {
+          margin-left: 0px;  /* Move the close button down */
+          margin-right: -10px; /* Move it further right if needed */
+      }
+  </style>
+    <style>
+      .text-muted circle-button{
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        cursor: pointer;
+        transition: 0.3s;
+
+      }
+
+    </style>
+    <style>
+      .center-container {
+    display: flex;
+    justify-content: center;  /* Center horizontally */
+    align-items: center;      /* Center vertically */
+    height: 50vh;            /* Make it take full viewport height */
+}
+
+    </style>
+  
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    -->
+    <!-- <h3 class="text-muted text-center fw-medium mt-5">No venues created, please add Venues...</h3> -->
+
+   <!-- Add Venue Button -->
+<!-- <button type="button" class="add_button" data-bs-toggle="modal" data-bs-target="#venueModal">
+  <span>&#43;</span>
+</button> -->
+
+<!-- Venue Modal -->
+<div class="modal fade" id="venueModal" tabindex="-1" aria-labelledby="venueModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="venueModalLabel">Add New Venue</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <form method="POST" action="/admins_page">
+        <div class="mb-3">
+          <label for="venueName" class="form-label">Venue Name:</label>
+          <input type="text" class="form-control" id="venueName" name="name" required>
+        </div>
+        <div class="mb-3">
+          <label for="venueLocation" class="form-label">Location:</label>
+          <input type="text" class="form-control" id="venueLocation" name="location" required>
+        </div>
+        <div class="mb-3">
+          <label for="venueCompany" class="form-label">company:</label>
+          <input type="text" class="form-control" id="venue_company" name="company"required>
+        </div>
+          <label for="venueCapacity" class = "form-label"> Capacity:</label>
+          <input type="number" class ="form-control" id="venueCapacity"name ="capacity"required>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save Venue</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+{% if venues %}
+    <!-- Table for Existing Venues -->
+    <table class="table table-bordered mt-4">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">sno</th>
+          <th scope="col">Name</th>
+          <th scope="col">Location</th>
+          <th scope="col">Company</th>
+          <th scope="col">Capacity</th>
+          <th scope="col">Date Created</th>
+          <th scope="col">Actions</th>
+          <th scope="col">Shows</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        {% for venue in venues %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ venue.name }}</td>
+          <td>{{ venue.location }}</td>
+          <td>{{ venue.company }}</td>
+          <td>{{ venue.capacity }}</td>
+          <td>{{ venue.date_created.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+          <td><a href = '/delete/{{venue.sno}}' class="btn btn-outline-white btn-sm btn-danger ">Delete</button>
+            <a href = '/admin_update/{{venue.sno}}' class="btn btn-outline-white btn-sm btn-success mx-1">Update</button></td>  
+              <td>
+                <!-- Button to open the modal -->
+                <a href="#" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#addShowModal{{ venue.sno }}">Add Show</a>
+              
+                {% if venue.shows %}
+                  <div class="d-flex flex-column gap-2">
+                    {% for show in venue.shows %}
+                      <div class="card shadow-sm border border-primary">
+                        <div class="card-body p-2">
+                          <h6 class="card-title mb-1 text-primary">{{ show.name }}</h6>
+                          <p class="mb-1"><strong>Price:</strong> ₹{{ show.price }}</p>
+                          <p class="mb-1"><strong>Date:</strong> {{ show.date.strftime('%b %d, %Y at %I:%M %p') }}</p>
+                          <p class="mb-0 text-muted" style="font-size: 0.85em;">
+                            <a href="/delete_show/{{ show.id }}" class="btn btn-sm btn-danger mt-1">Delete</a>
+                            <button class="btn btn-sm btn-success mt-1" data-bs-toggle="modal" data-bs-target="#editShowModal{{ show.id }}">
+                              Edit
+                          </button>
+
+                          
+<!-- Modal -->
+<div class="modal fade" id="editShowModal{{ show.id }}" tabindex="-1" aria-labelledby="editShowModalLabel{{ show.id }}" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/edit_show/{{ show.id }}" method="POST">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editShowModalLabel{{ show.id }}">Edit Show</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input type="text" class="form-control mb-2" name="name" value="{{ show.name }}" required>
+          <input type="datetime-local" class="form-control mb-2" name="date" value="{{ show.date.strftime('%Y-%m-%dT%H:%M') }}" required>
+          <input type="number" class="form-control" name="price" value="{{ show.price }}" required>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+                            <!-- Placeholder for future: seat capacity, availability etc. -->
+                            <div>
+                              <em>Seats info coming soon...</em>
+                            </div>
+                          </p>
+                        </div>
+                      </div>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  <small class="text-muted">No shows yet</small>
+                {% endif %}
+              </td>
+              
+        </tr>
+
+        <!-- Add Show Modal -->
+<div class="modal fade" id="addShowModal{{ venue.sno }}" tabindex="-1" aria-labelledby="addShowLabel{{ venue.sno }}" aria-hidden="true">
+  <div class="modal-dialog">
+    <form method="POST" action="/add_show">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addShowLabel{{ venue.sno }}">Add Show for {{ venue.name }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <input type="hidden" name="venue_id" value="{{ venue.sno }}">
+
+          <div class="mb-3">
+            <label>Show Name</label>
+            <input type="text" class="form-control" name="name" required>
+          </div>
+
+          <div class="mb-3">
+            <label>Date & Time</label>
+            <input type="datetime-local" class="form-control" name="date" required>
+          </div>
+
+          <div class="mb-3">
+            <label>Price</label>
+            <input type="number" class="form-control" name="price" required>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Add Show</button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+
+        {% endfor %}
+        
+      </tbody>
+    </table>
+
+    <!-- Centered Circular "Add Venue" Button -->
+    <div class="d-flex justify-content-center mt-3">
+      <button type="button" class="circle-button" data-bs-toggle="modal" data-bs-target="#venueModal">
+        <span>&#43;</span>
+     </button>
+    </div>
+
+{% else %}
+    <!-- Show Message and Center the Button -->
+    <h3 class="text-muted text-center fw-medium mt-5">
+      <div class="alert alert-warning" role="alert">
+        No venues created, please add Venues...
+      </div>
+    </h3>
+    <div  class="center-container">
+      <button type="button" class="circle-button" data-bs-toggle="modal" data-bs-target="#venueModal">
+      <span>&#43;</span>
+   </button>
+    </div>
+    
+{% endif %}
+        
+{% endblock body %}
+
+

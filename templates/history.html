@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your Booking History</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #f0f0f0; }
+    table { border-collapse: collapse; width: 100%; background: white; }
+    th, td { border: 1px solid #ddd; padding: 12px; text-align: center; }
+    th { background-color: #4CAF50; color: white; }
+    tr:hover { background-color: #f5f5f5; }
+  </style>
+</head>
+<body>
+  <h2>Your Booking History</h2>
+
+  {% if bookings %}
+    <table>
+      <tr>
+        <th>Show</th>
+        <th>Date</th>
+        <th>Seat Number</th>
+        <th>Venue</th>
+      </tr>
+      {% for booking in bookings %}
+      <tr>
+        <td>{{ booking.show.name }}</td>
+        <td>{{ booking.show.date.strftime("%b %d, %Y at %I:%M %p") }}</td>
+        <td>{{ booking.seat_number }}</td>
+        <td>{{ booking.show.venue.name }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>You have no bookings yet.</p>
+  {% endif %}
+</body>
+</html>

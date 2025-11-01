@@ -1,0 +1,28 @@
+{% extends 'admin_base.html' %}
+
+{% block body %}
+<div class="container mt-5">
+  <h3 class="text-center mb-4">Update Your Venue</h3>
+  <form action="/admin_update/{{ venue.sno }}" method="POST">
+    <div class="mb-3">
+      <label for="venueName" class="form-label">Venue Name:</label>
+      <input type="text" class="form-control" value="{{ venue.name }}" id="venueName" name="name" required>
+    </div>
+    <div class="mb-3">
+      <label for="venueLocation" class="form-label">Location:</label>
+      <input type="text" class="form-control" value="{{ venue.location }}" id="venueLocation" name="location" required>
+    </div>
+    <div class="mb-3">
+      <label for="venueCompany" class="form-label">Company:</label>
+      <input type="text" class="form-control" value="{{ venue.company }}" id="venue_company" name="company" required>
+    </div>
+    <div class="mb-3">
+      <label for="venueCapacity" class="form-label">Capacity:</label>
+      <input type="number" class="form-control" value="{{ venue.capacity }}" id="venueCapacity" name="capacity" required>
+    </div>
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary">Update Venue</button>
+    </div>
+  </form>
+</div>
+{% endblock body %}

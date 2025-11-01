@@ -1,0 +1,56 @@
+{% extends 'users_dash.html' %}
+
+{% block body %}
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Available Venues & Shows</h2>
+
+  {% if venues %}
+    <table class="table table-striped">
+      <thead class="table-primary">
+        <tr>
+          <th>#</th>
+          <th>Venue Name</th>
+          <th>Location</th>
+          <th>Company</th>
+          <th>Capacity</th>
+          <th>Shows</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for venue in venues %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ venue.name }}</td>
+          <td>{{ venue.location }}</td>
+          <td>{{ venue.company }}</td>
+          <td>{{ venue.capacity }}</td>
+          <td>
+            {% if venue.shows %}
+              <ul class="list-unstyled">
+                {% for show in venue.shows %}
+                  <li class="mb-2">
+                    <strong>{{ show.name }}</strong><br>
+                    Date: {{ show.date.strftime('%b %d, %Y at %I:%M %p') }}<br>
+                    Price: ₹{{ show.price }}
+                  </li>
+                  <form action="{{ url_for('book', show_id=show.id) }}" method="get">
+    <button type="submit" class="btn btn-primary">Book</button>
+</form>
+
+                {% endfor %}
+              </ul>
+            {% else %}
+              <small class="text-muted">No shows listed.</small>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div class="alert alert-warning text-center">
+      No venues available right now.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

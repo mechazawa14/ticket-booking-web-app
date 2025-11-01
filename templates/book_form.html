@@ -1,0 +1,48 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow rounded-4">
+        <div class="card-body">
+          <h3 class="card-title text-center mb-4">🎟️ Book Your Seat</h3>
+          <form method="POST">
+            <div class="mb-3">
+              <label for="seat_number" class="form-label">Seat Number <small class="text-muted">(1 - {{ show.venue.capacity }})</small>:</label>
+              <input 
+                type="number" 
+                class="form-control rounded-pill shadow-sm" 
+                name="seat_number" 
+                min="1" 
+                max="{{ show.venue.capacity }}" 
+                required
+              >
+            </div>
+            <div>
+              <div class="mb-3">
+  <label class="form-label">Select Snacks & Beverages (optional):</label><br>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" name="snacks" value="Popcorn" id="popcorn">
+    <label class="form-check-label" for="popcorn">Popcorn</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" name="snacks" value="Cold Drink" id="cold_drink">
+    <label class="form-check-label" for="cold_drink">Cold Drink</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" name="snacks" value="Nachos" id="nachos">
+    <label class="form-check-label" for="nachos">Nachos</label>
+  </div>
+</div>
+
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary rounded-pill shadow-sm">
+                ✅ Confirm Booking
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    

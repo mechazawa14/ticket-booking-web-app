@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGIN INTERFACE</title>
+    <!-- <link rel="stylesheet" href="style1.css"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}">
+
+    <style>
+        .heading{
+            text-align: center;
+            margin-top: 60px;
+            margin-bottom: 45px;
+            color: rgb(255, 255, 255);
+        }
+        .outline-box{
+            width: 400px;
+            height: 350px;
+            border: 2px solid rgb(163, 121, 31);
+            padding: 60px;
+            margin: 20px auto;
+            font-size: 18px; 
+        }
+        .user-name{
+            font-size: 18px;
+            display: block;
+        }
+        .username-box{
+            width: 250px;
+            height: 50px;
+            margin-top: 10px;
+            display: block;
+            margin-bottom: 25px;
+        }
+        .pass-word{
+            font-size: 18px;
+            display: block;
+        }
+        .password-box{
+            width: 250px;
+            height: 50px;
+            margin-top: 10px;
+            display: block;
+            margin-bottom: 50px;
+        }
+        .login-button{
+            width: 170px;
+            height: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 20px;
+            margin-right: 5px;
+        }
+        .reg-button{
+            width: 170px;
+            height: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #12a9f5;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .lilfont{
+            color: white;
+        }
+    </style>
+    
+</head>
+<body>
+    <h1 class="heading">SEAT-SAVVY</h1>
+    <form action= "/" method ="POST">   
+    <div class = "outline-box">
+        
+        <div class = user-name>
+            Username:
+            <div>
+                <input class="username-box" type="text" name = "userName" placeholder="Enter Username" >
+            </div>
+        </div>
+        <div>
+            
+            Password:
+            <div class = pass-word>
+                <input class="password-box" type="password" name = "userPassword" placeholder="Enter Password" >
+            </div>
+        </div>
+
+        <!-- ADD THIS inside the form, between password and login button -->
+<div style="margin-bottom: 30px;">
+    <label for="role" class = lilfont style="font-size: 18px;">Login as:</label>
+    <select name="role" style="width: 250px; height: 40px; margin-left: 15px;">
+        <option value="admin">Admin</option>
+        <option value="user">User</option>
+    </select>
+</div>
+
+
+        <button class="login-button" type = "submit">
+            LOGIN
+        </button>
+        <!-- <button class="reg-button">
+            REGISTER
+        </button> -->
+        <a href="/register"><button class="reg-button" type="button">REGISTER</button></a>
+
+    </div>
+     
+    
+       
+</form>
+    
+</body>
+</html>

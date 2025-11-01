@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Available Shows</title>
+</head>
+<body>
+    <h1>Available Shows</h1>
+    {% for venue in venues %}
+        <h2>{{ venue.name }} - {{ venue.location }} ({{ venue.company }})</h2>
+        <ul>
+            {% for show in venue.shows %}
+                <li>
+                    <strong>{{ show.name }}</strong> - ₹{{ show.price }} on {{ show.date.strftime('%Y-%m-%d %H:%M') }}
+                </li>
+            {% else %}
+                <li>No shows at this venue.</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+</body>
+</html>

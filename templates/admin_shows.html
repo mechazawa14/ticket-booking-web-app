@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Shows Management</title>
+</head>
+<body>
+    <h1>Manage Shows</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+          {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    {% for venue in venues %}
+        <h2>{{ venue.name }} - {{ venue.location }} ({{ venue.company }})</h2>
+        <ul>
+            {% for show in venue.shows %}
+                <li>
+                    <strong>{{ show.name }}</strong> - ₹{{ show.price }} on {{ show.date.strftime('%Y-%m-%d %H:%M') }}
+                    <!-- Reset bookings button -->
+                    <a href="{{ url_for('reset_bookings', show_id=show.id) }}" class="btn btn-danger btn-sm"
+                       onclick="return confirm('Are you sure you want to reset all bookings for this show?');">
+                      Reset Bookings
+                    </a>
+                    <!-- Add Edit and Delete buttons as needed -->
+                    <a href="{{ url_for('edit_show', show_id=show.id) }}" class="btn btn-primary btn-sm">Edit</a>
+                    <a href="{{ url_for('delete_show', show_id=show.id) }}" class="btn btn-warning btn-sm"
+                       onclick="return confirm('Delete this show?');">Delete</a>
+                </li>
+            {% else %}
+                <li>No shows at this venue.</li>
+            {% endfor %}
+        </ul>
+        <!-- Optionally add a button to add a new show to this venue -->
+        <a href="{{ url_for('add_show', venue_id=venue.id) }}" class="btn btn-success btn-sm">Add Show</a>
+    {% endfor %}
+</body>
+</html>
